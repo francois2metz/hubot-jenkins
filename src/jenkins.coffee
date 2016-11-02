@@ -58,7 +58,7 @@ jenkinsBuild = (msg, buildWithEmptyParameters) ->
         if err
           msg.reply "Jenkins says: #{err}"
         else if 200 <= res.statusCode < 400 # Or, not an error code.
-          msg.reply "(#{res.statusCode}) Build started for #{unescapedJob} #{url}/job/#{job}"
+          msg.reply "(#{res.statusCode}) Build started for #{job} #{url}/job/#{job}"
         else if 400 == res.statusCode
           jenkinsBuild(msg, true)
         else
