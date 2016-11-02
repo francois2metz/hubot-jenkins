@@ -41,8 +41,8 @@ jenkinsBuildById = (msg) ->
 
 jenkinsBuild = (msg, buildWithEmptyParameters) ->
     url = process.env.HUBOT_JENKINS_URL
-    unescapedJob = msg.match[1]
-    job = querystring.escape unescapedJob
+    job = msg.match[1]
+    #job = querystring.escape unescapedJob
     params = msg.match[3]
     command = if buildWithEmptyParameters then "buildWithParameters" else "build"
     path = if params then "#{url}/job/#{job}/buildWithParameters?#{params}" else "#{url}/job/#{job}/#{command}"
