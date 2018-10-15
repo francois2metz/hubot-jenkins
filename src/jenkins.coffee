@@ -43,9 +43,9 @@ jenkinsBuild = (msg, buildWithEmptyParameters) ->
     url = process.env.HUBOT_JENKINS_URL
     job = msg.match[1]
     #job = querystring.escape unescapedJob
-    params = msg.match[3]
+    params = msg.match[3] || []
     command = if buildWithEmptyParameters then "buildWithParameters" else "build"
-    path = if params then "#{url}/job/#{job}/buildWithParameters?#{params}" else "#{url}/job/#{job}/#{command}"
+    path = "#{url}/job/#{job}/#{command}"
 
     req = msg.http(path)
 
@@ -54,7 +54,7 @@ jenkinsBuild = (msg, buildWithEmptyParameters) ->
       req.headers Authorization: "Basic #{auth}"
 
     req.header('Content-Length', 0)
-    req.post() (err, res, body) ->
+    req.post(params) (err, res, body) ->
         if err
           msg.reply "Jenkins says: #{err}"
         else if 200 <= res.statusCode < 400 # Or, not an error code.
